@@ -68,12 +68,12 @@ export default function Home({ movies }) {
             </div>
 
             <div className="collapse card-body" id={"desc" + id}>
-              <a href={url} className='btn btn-secondary m-3 p-3' target="_blank">YTS</a>
+              <a href={url} className='btn btn-secondary m-3 p-3' target="_blank" rel='noreferrrer'>YTS</a>
               <p className="card-text">{summary}</p>
 
               <div className="d-flex flex-wrap justify-content-center">
                 {torrents.map(({ hash, url, quality }) => (
-                  <a href={url} key={hash} className='btn btn-primary mx-1 my-1' target="_blank">{quality}</a>
+                  <a href={url} key={hash} className='btn btn-primary mx-1 my-1' rel='noreferrrer' target="_blank">{quality}</a>
                 ))}
               </div>
             </div>
