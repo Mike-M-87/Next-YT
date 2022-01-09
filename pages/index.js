@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 
 // import {page,yturl} from '../lib/events.js'
 let page = 1
@@ -45,7 +46,7 @@ export default function Home({ movies }) {
 
       <div className="row p-3 align-items-center">
         <div className="col-11 h5">Good Morning, Pirate</div>
-        <img className="col-1 rounded-circle" src='profile.jpg'></img>
+        <div className="col-1"><Image alt='profile' className="rounded-circle" src='/profile.jpg' width={100} height={100}></Image></div>
       </div>
 
 
@@ -54,12 +55,12 @@ export default function Home({ movies }) {
           <div className="card my-2 bg-dark" key={id}>
 
             <div data-bs-toggle="collapse" data-bs-target={"#desc" + id} className="row justify-content-evenly align-items-center p-2">
-              <img className="col-sm-2 col-3" src={large_cover_image}></img>
+              <div className="col-sm-2 col-3"><Image alt='cover' src={large_cover_image} height={100} width={100}></Image></div>
               <h6 className="col-sm-8 col-6 card-title">{title}<br />{year}</h6>
 
               <div className="col-sm-2 col-3 d-flex flex-column align-items-center">
                 <div className="row">
-                  <img src='star.png' className="col-5"></img>
+                  <div  className="col-5"><Image alt='imdb' src='/star.png' width={100} height={100}></Image></div>
                   <small className="col-7">{rating}</small>
                 </div>
                 <small className="my-2" >{Math.floor(runtime / 60) + " Hrs " + runtime % 60 + " Min"}</small>
