@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
 
-let yturl = 'https://yts.mx/api/v2/list_movies.json?limit=10&sort_by=download_count'
+let yturl = 'https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=download_count'
 let changepage = ''
 
 export async function getStaticProps() {
@@ -31,18 +31,27 @@ export default function Home({ movies }) {
   const [newPage, setPage] = useState(1)
   const [movie, setmovies] = useState(movies)
 
-  async function res(path, pageEnable) {
-    try {
-      await fetch(path).then((response) => response.json()).then((data) => {
-        changepage = pageEnable ? '' : 'disabled'
-        if (data.status == 'ok') {
-          setmovies(data.data.movies)
-        }
-      });
-    } catch (error) {
-      setmovies("404")
-    }
-  }
+  // function res(path, pageEnable) {
+  //   try {
+  //     await fetch(path).then((response) => response.json()).then((data) => {
+  //       changepage = pageEnable ? '' : 'disabled'
+  //       if (data.status == 'ok') {
+  //         setmovies(data.data.movies)
+  //       }
+  //     });
+  //   } catch (error) {
+  //     setmovies("404")
+  //   }
+  // }
+
+  const res = useCallback((path, pageEnable) => {
+    fetch(path).then((response) => response.json()).then((data) => {
+      changepage = pageEnable ? '' : 'disabled'
+      if (data.status == 'ok') {
+        setmovies(data.data.movies)
+      }
+    });
+  },[])
 
   const searcher = useCallback((event) => {
     event.preventDefault()
