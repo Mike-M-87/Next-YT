@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
 
-let yturl = 'https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=download_count'
+let yturl = 'https://yts.mx/api/v2/list_movies.json?sort_by=download_count'
 let changepage = ''
 
 
