@@ -3,10 +3,8 @@ import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
 
-let yturl = 'https://yts.mx/api/v2/list_movies.json?sort_by=download_count'
+let yturl = 'https://yts.mx/api/v2/list_movies.json?limit=10&sort_by=download_count'
 let changepage = ''
-
-
 
 export async function getStaticProps() {
   let movies = "404"
@@ -120,11 +118,11 @@ export default function Home({ movies }) {
 
       <section>
         {movie != null && movie != undefined ?
-          movie.map(({ id, title, url, summary, year, large_cover_image, rating, runtime, torrents }) => (
+          movie.map(({ id, title, url, summary, year, rating, runtime, torrents, medium_cover_image }) => (
             <div className="card my-2 bg-dark" key={id}>
 
               <div data-bs-toggle="collapse" data-bs-target={"#desc" + id} className="row align-items-center p-1">
-                <div className="col-sm-2 col-lg-1 col-3"><Image priority="true" alt='cover' src={large_cover_image} height={140} width={100}></Image></div>
+                <div className="col-sm-2 col-lg-1 col-3"><Image priority="true" alt='cover' src={medium_cover_image} height={140} width={100}></Image></div>
                 <h6 className="col-sm-8 col-lg-9 col-6">{title}<br />{year}</h6>
 
                 <div className="col-sm-2 col-3 d-flex flex-column align-items-center">
