@@ -16,6 +16,12 @@ a {
 
 a:hover {
   cursor: pointer;
+  
+}
+
+.errormsg {
+  margin-top: 30%;
+  text-align: center;
 }
 
 .runtime {
