@@ -83,7 +83,7 @@ export default function Home({ movies }) {
       <section className='errormsg'>
         <div className='display-2'>Error!</div>
         <p className=''>Please check your network and reload the page</p>
-        <a href='/' className='btn btn-secondary'>Reload</a>
+        <a href='https://next-yt.vercel.app/' className='btn btn-secondary'>Reload</a>
       </section>
     )
   };
@@ -102,7 +102,7 @@ export default function Home({ movies }) {
       </div>
       <form className="d-flex mb-4" onSubmit={searcher}>
         <input className="form-control text-white me-2 bg-dark" onChange={searchboxEmpty} type="text" placeholder="Search" />
-        <button class="btn btn-primary">Search</button>
+        <button className="btn btn-primary">Search</button>
 
         <div className="dropdown">
           <button className='btn' data-bs-toggle="dropdown">
@@ -111,9 +111,9 @@ export default function Home({ movies }) {
           <ul className="dropdown-menu dropdown-menu-dark">
             <li className='dropdown-header'>Feature Disabled</li>
             <li className='dropdown-divider'></li>
-            <a className="dropdown-item disabled">Download_count</a>
-            <a className="dropdown-item disabled">Year</a>
-            <a className="dropdown-item disabled">Rating</a>
+            <li className="dropdown-item disabled">Download_count</li>
+            <li className="dropdown-item disabled">Year</li>
+            <li className="dropdown-item disabled">Rating</li>
           </ul>
         </div>
       </form>
@@ -157,7 +157,7 @@ export default function Home({ movies }) {
         <li className="list-group-item list-group-item-info"><a className="badge bg-primary">{newPage}</a></li>
         <a className={"list-group-item list-group-item-info " + changepage} onClick={nextPage} href='#'>Next</a>
       </ul>
-      <a className="m-2 btn btn-primary float-start" href="/">Page 1</a>
+      <a className="m-2 btn btn-primary float-start" href="https://next-yt.vercel.app/">Page 1</a>
       <a className="m-2 btn btn-primary float-end" href="#">Back to top</a>
     </div>
   )
