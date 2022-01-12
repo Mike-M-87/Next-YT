@@ -124,7 +124,7 @@ export default function Home({ movies }) {
             <div className="card my-2 bg-dark" key={id}>
 
               <div data-bs-toggle="collapse" data-bs-target={"#desc" + id} className="row align-items-center p-1">
-                <div className="col-sm-2 col-lg-1 col-3"><Image alt='cover' src={large_cover_image} height={140} width={100}></Image></div>
+                <div className="col-sm-2 col-lg-1 col-3"><Image priority="true" alt='cover' src={large_cover_image} height={140} width={100}></Image></div>
                 <h6 className="col-sm-8 col-lg-9 col-6">{title}<br />{year}</h6>
 
                 <div className="col-sm-2 col-3 d-flex flex-column align-items-center">
