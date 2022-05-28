@@ -30,6 +30,21 @@ a:hover {
 .fh-100 {
   height: 100vh;
 }
+.fw-25 {
+  width: 25vw;
+}
+.fw-50 {
+  width: 50vw;
+}
+.fw-75 {
+  width: 75vw;
+}
+.fw-100 {
+  width: 100vw;
+}
+
+
+
 
 #ytslist{
   scroll-behavior: smooth;
