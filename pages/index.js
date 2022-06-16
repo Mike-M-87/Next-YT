@@ -43,10 +43,18 @@ export default function Home({ movies }) {
 
 
   const handleChange = useCallback((key, value) => {
-    setParams({
-      ...params,
-      [key]: value
-    })
+    if (key === 'query_term') {
+      setParams({
+        ...params,
+        [key]: value,
+        page: 1
+      })
+    } else {
+      setParams({
+        ...params,
+        [key]: value
+      })
+    }
 
   }, [params])
 
@@ -68,10 +76,15 @@ export default function Home({ movies }) {
 
   return (
     <>
-      <div id='ytslist' className="container-fluid overflow-auto fh-100 bg-black text-light py-1">
+      <main id='ytslist' className="container-fluid overflow-auto fh-100 bg-black text-light py-1">
 
         <Head>
           <title>NEXT YT</title>
+          <meta property="og:image" content="/yify.jpg" />
+          <meta name="theme-color" content="#5CD85A" />
+          <meta name="color-scheme" content="light dark" />
+          <meta property="og:description" content="Basic implementation of the yts.mx/api" />
+          <meta property="og:url" content="https://next-yt.vercel.app/" />
           <link rel="icon" href="https://yts.mx/assets/images/website/favicon.ico" />
         </Head>
 
@@ -181,31 +194,22 @@ export default function Home({ movies }) {
                   </div>
 
                   <div className="collapse card-body" id={`movie${id}`}>
-                    <div className='hstack gap-4'>
-                      <a href={url} className='btn btn-secondary btn-lg my-3' target="_blank" rel="noreferrer">YTS</a>
-                      <a className="btn btn-secondary btn-lg my-3" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(yt_trailer_code)}>Trailer and Clips</a>
+                    <div className='hstack gap-4 my-3'>
+                      <a href={url} className='btn btn-secondary' target="_blank" rel="noreferrer">YTS</a>
+                      <a className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(yt_trailer_code)}>Trailer and Clips</a>
+                      <a href={`/watch/${id}`} className='btn btn-secondary'>Watch</a>
                     </div>
                     <p className="card-text">{summary}</p>
 
                     <div className="d-flex flex-wrap justify-content-center gap-3">
                       {torrents.map(({ hash, url, quality }) => (
-
-                        <div className="dropdown" key={hash}>
-                          <button className="btn btn-success dropdown-toggle" type="button" id="movieMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            {quality}
-                          </button>
-                          <ul className="dropdown-menu fs-5 bg-warning" aria-labelledby="movieMenu">
-                            <li><a className="dropdown-item" href={`/watch/${title}-${hash}`}>Stream</a></li>
-                            <li><a className="dropdown-item" target="_blank" rel="noreferrer" href={url}>Download</a></li>
-                          </ul>
-                        </div>
-
+                        <a key={hash} className="btn btn-success" target="_blank" rel="noreferrer" href={url}>{quality}</a>
                       ))}
                     </div>
                   </div>
 
                 </div>
-              )) : <div className='text-center py-5 my-5'>Movie not found</div>}
+              )) : <LoadingSpinner />}
         </section>
 
         <ul className="pagination justify-content-center py-4">
@@ -224,7 +228,7 @@ export default function Home({ movies }) {
           </li>
         </ul>
 
-      </div>
+      </main>
 
       <div className="modal fade" id="trailerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
