@@ -203,7 +203,7 @@ export default function Home({ movies }) {
 
                     <div className="d-flex flex-wrap justify-content-center gap-3">
                       {torrents.map(({ hash, url, quality }) => (
-                        <a key={hash} className="btn btn-success" target="_blank" rel="noreferrer" href={url}>{quality}</a>
+                        <a key={hash} className="btn btn-success" href={url}>{quality}</a>
                       ))}
                     </div>
                   </div>
