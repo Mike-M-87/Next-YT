@@ -61,7 +61,7 @@ export default function Home({ movies }) {
   const getTimeOfDay = () => {
     let date = new Date()
     let hour = date.getHours()
-    return hour < 12 ? 'morning' : hour < 18 ? 'Afternoon' : 'Evening'
+    return hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
   }
 
 
@@ -88,9 +88,9 @@ export default function Home({ movies }) {
           <link rel="icon" href="https://yts.mx/assets/images/website/favicon.ico" />
         </Head>
 
-        <div className="hstack justify-content-between p-3">
-          <h4 className="">Good {getTimeOfDay()}, Pirate</h4>
-          <div className=""><Image alt='profile' className="rounded-circle" src='/profile.jpg' width={50} height={50}></Image></div>
+        <div className="hstack justify-content-between py-3">
+          <h4>Good {getTimeOfDay()}, Pirate</h4>
+          <a href="https://github.com/Mike-M-87/Next-YT.git" target="_blank" rel="noreferrer"><Image alt='profile' className="rounded-circle" src='/github.webp' width={40} height={40} /></a>
         </div>
 
         <input className="form-control" type="text" placeholder="Search" onChange={(e) => handleChange("query_term", e.target.value)} />
