@@ -214,15 +214,15 @@ export default function Home({ movies }) {
 
         <ul className="pagination justify-content-center py-4">
           <li className="page-item">
-            <button className="page-link" href="#" aria-label="Previous" onClick={(e) => handleChange("page", params.page - 1)} disabled={params.page <= 1 || loading}>
+            <button className="page-link text-success bg-dark" href="#" aria-label="Previous" onClick={(e) => handleChange("page", params.page - 1)} disabled={params.page <= 1 || loading}>
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
 
-          <li className="page-item active"><a className="page-link" href="#">{params.page}</a></li>
+          <li className="page-item active"><a className="page-link bg-success" href="#">{params.page}</a></li>
 
           <li className="page-item">
-            <button className="page-link" href="#" aria-label="Next" onClick={(e) => handleChange("page", params.page + 1)} disabled={loading}>
+            <button className="page-link text-success bg-dark" href="#" aria-label="Next" onClick={(e) => handleChange("page", params.page + 1)} disabled={loading}>
               <span aria-hidden="true">&raquo;</span>
             </button>
           </li>
