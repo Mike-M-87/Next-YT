@@ -103,7 +103,7 @@ export default function Watch({ moviehash, movie }) {
 
             <div className="d-flex flex-wrap align-items-center justify-content-center gap-3 mb-5">
               {movie.torrents.map(({ hash, url, quality }) => (
-                <a href={url} key={hash} className="btn btn-success" type="button" id="movieMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href={url} key={hash} className="btn btn-success">
                   {quality}
                 </a>
               ))}
