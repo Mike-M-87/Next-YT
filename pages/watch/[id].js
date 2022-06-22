@@ -43,10 +43,10 @@ export default function Watch({ moviehash, movie }) {
         try {
           await navigator.share({
             title: movie.title,
-            url: window.location.href
+            url: "https://next-yt.vercel.app/watch/" + movie.id
           })
         } catch (err) {
-          navigator.clipboard.writeText(window.location.href).then(function () {
+          navigator.clipboard.writeText("https://next-yt.vercel.app/watch/" + movie.id).then(function () {
             toast.success('Copied to clipboard!')
           }, function (err) {
             toast.error('Error sharing')
@@ -71,7 +71,7 @@ export default function Watch({ moviehash, movie }) {
             <meta name="color-scheme" content="light dark" />
             <meta property="og:title" content={movie.title + " ⭐" + movie.rating} />
             <meta property="og:description" content={movie.description_full} />
-            <meta property="og:url" content="https://next-yt.vercel.app/" />
+            <meta property="og:url" content={"https://next-yt.vercel.app/watch/" + movie.id} />
             <meta property="og:image" content={movie.large_cover_image} />
             <meta property="og:image:type" content="image/jpeg" />
             <meta property="og:image:width" content="400" />
