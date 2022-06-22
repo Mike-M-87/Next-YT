@@ -46,3 +46,7 @@ a:hover {
 #ytslist{
   scroll-behavior: smooth;
 }
+
+.sdf{
+  color: #1d1d1d;
+}

@@ -1,40 +1,55 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import LoadingSpinner from '../components/loading'
 
 
-let yturl = 'https://yts.mx/api/v2/list_movies.json?'
+const yturl = 'https://yts.mx/api/v2/list_movies.json?'
 
-export default function Home({ movies }) {
-  const [movie, setmovies] = useState([])
+const defaultparams = {
+  limit: 20,
+  page: 1,
+  quality: 'All',
+  minimum_rating: 0,
+  query_term: '',
+  genre: '',
+  sort_by: 'download_count',
+  order_by: 'desc',
+  with_rt_ratings: false,
+}
+
+Home.getInitialProps = async () => {
+  let movies = null
+  try {
+    const response = await fetch(`${yturl}${Object.entries(defaultparams).map(([key, value]) => `${key}=${value}`).join('&')}`)
+    const json = await response.json()
+    movies = json.data.movies
+  } catch (error) {
+    console.log(error);
+  }
+  return { premovies: movies }
+}
+
+
+export default function Home({ premovies }) {
+  const [movies, setmovies] = useState(premovies)
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState('')
-  const [params, setParams] = useState({
-    limit: 10,
-    page: 1,
-    quality: 'All',
-    minimum_rating: 0,
-    query_term: '',
-    genre: '',
-    sort_by: 'download_count',
-    order_by: 'desc',
-    with_rt_ratings: false,
-  })
+  const [params, setParams] = useState(defaultparams)
   const [trailer, setTrailer] = useState('')
 
 
   useEffect(() => {
     async function fetchmovies() {
-      setLoading(true)
-      fetch(`${yturl}${Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&')}`)
-        .then(res => res.json())
-        .then(res => {
-          setmovies(res.data.movies)
-        })
-        .catch(err => {
-          console.log(err);
-        })
+      try {
+        setLoading(true)
+        const response = await fetch(`${yturl}${Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&')}`)
+        const json = await response.json()
+        setmovies(json.data.movies)
+      } catch (error) {
+        toast.error(error.message)
+      }
       setLoading(false)
       document.getElementById('ytslist').scrollTo(0, 0)
     }
@@ -139,11 +154,11 @@ export default function Home({ movies }) {
 
             <div>
               <h5 className='text-center text-success'>Sort By</h5>
-              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
+              <select defaultValue="download_count" className="form-select bg-dark text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
                 <option value="date_added">Date Added</option>
                 <option value="year">Year</option>
                 <option value="rating">Rating</option>
-                <option selected value="download_count">Download Count</option>
+                <option value="download_count">Download Count</option>
                 <option value="like_count">Like Count</option>
                 <option value="title">Title</option>
                 <option value="peers">Peers</option>
@@ -189,8 +204,8 @@ export default function Home({ movies }) {
 
         <section className='mt-3'>
           {loading ? <LoadingSpinner /> :
-            movie != null && movie != undefined ?
-              movie.map(({ id, title, url, summary, year, large_cover_image, rating, runtime, torrents, yt_trailer_code }) => (
+            movies ?
+              movies.map(({ id, title, url, summary, year, large_cover_image, rating, runtime, torrents, yt_trailer_code }) => (
 
                 <div className="card my-2 rounded bg-dark" key={id}>
                   <div data-bs-toggle="collapse" data-bs-target={`#movie${id}`} className="hstack gap-4 cursor-pointer">

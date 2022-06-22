@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export async function getServerSideProps({ params }) {
   let moviehash = null;
@@ -44,12 +45,12 @@ export default function Watch({ moviehash, movie }) {
             title: movie.title,
             url: window.location.href
           })
+          toast.success('Share with your friends!')
         } catch (err) {
-          console.log(err);
           navigator.clipboard.writeText(window.location.href).then(function () {
-            console.log('Copied to clipboard');
+            toast.success('Copied to clipboard!')
           }, function (err) {
-            console.log(err);
+            toast.error('Error sharing')
           })
         }
       });
