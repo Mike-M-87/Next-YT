@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }) {
           textTransform: 'capitalize',
         }}
         toastOptions={{
+          duration: 1000,
           error: {
             style: {
               background: '#1c1c1c',

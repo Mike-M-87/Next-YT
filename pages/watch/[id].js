@@ -45,7 +45,6 @@ export default function Watch({ moviehash, movie }) {
             title: movie.title,
             url: window.location.href
           })
-          toast.success('Share with your friends!')
         } catch (err) {
           navigator.clipboard.writeText(window.location.href).then(function () {
             toast.success('Copied to clipboard!')
