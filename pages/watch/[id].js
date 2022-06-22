@@ -36,6 +36,8 @@ export default function Watch({ moviehash, movie }) {
     }
   }, [trailer])
 
+
+
   return (
     <main className="container-fluid overflow-auto fh-100 bg-black text-light">
 
@@ -50,7 +52,7 @@ export default function Watch({ moviehash, movie }) {
             <meta content="width=device-width, initial-scale=1" name="viewport" />
             <meta name="theme-color" content="#5CD85A" />
             <meta name="color-scheme" content="light dark" />
-            <meta property="og:title" content={movie.title} />
+            <meta property="og:title" content={movie.title+" ⭐"+movie.rating} />
             <meta property="og:description" content={movie.description_full} />
             <meta property="og:url" content="https://next-yt.vercel.app/" />
             <meta property="og:image" content={movie.large_cover_image} />
@@ -80,6 +82,21 @@ export default function Watch({ moviehash, movie }) {
             <div className='hstack gap-4'>
               <a href={movie.url} className='btn btn-secondary' target="_blank" rel="noreferrer">YTS</a>
               <a className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(movie.yt_trailer_code)}>Trailer and Clips</a>
+              <button
+                id="share-button"
+                onClick={(e) => async () => {
+                  try {
+                    await navigator.share({
+                      title: movie.title,
+                      url: window.location.href
+                    })
+                  } catch (error) {
+                    alert(error)
+                  }
+                }}
+                className="btn btn-success text-black py-2 px-2 rounded-circle">
+                <span className="material-icons align-middle">share</span>
+              </button>
             </div>
 
             <p className="lead">{movie.description_full}</p>
@@ -104,6 +121,6 @@ export default function Watch({ moviehash, movie }) {
           </div>
         </>
       }
-    </main>
+    </main >
   )
 }

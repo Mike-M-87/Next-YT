@@ -93,91 +93,101 @@ export default function Home({ movies }) {
           <a href="https://github.com/Mike-M-87/Next-YT.git" target="_blank" rel="noreferrer"><Image alt='profile' className="rounded-circle" src='/github.webp' width={40} height={40} /></a>
         </div>
 
-        <input className="form-control" type="text" placeholder="Search" onChange={(e) => handleChange("query_term", e.target.value)} />
-
-        <div className="d-flex justify-content-around my-2 gap-2 flex-wrap">
-
-          <div>
-            <h5 className='text-center text-success'>Genre</h5>
-            <select className="form-select bg-dark text-light bg-dark text-light" onChange={(e) => handleChange("genre", e.target.value)}>
-              <option value="">All</option>
-              <option value="Action">Action</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Animation">Animation</option>
-              <option value="Biography">Biography</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Crime">Crime</option>
-              <option value="Documentary">Documentary</option>
-              <option value="Drama">Drama</option>
-              <option value="Family">Family</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Film-Noir">Film-Noir</option>
-              <option value="History">History</option>
-              <option value="Horror">Horror</option>
-              <option value="Music">Music</option>
-              <option value="Musical">Musical</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Romance">Romance</option>
-              <option value="Sci-Fi">Sci-Fi</option>
-              <option value="Short">Short</option>
-              <option value="Sport">Sport</option>
-              <option value="Superhero">Superhero</option>
-              <option value="Thriller">Thriller</option>
-              <option value="War">War</option>
-              <option value="Western">Western</option>
-            </select>
-          </div>
-
-          <div>
-            <h5 className='text-center text-success'>Sort By</h5>
-            <select className="form-select bg-dark text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
-              <option value="date_added">Date Added</option>
-              <option value="year">Year</option>
-              <option value="rating">Rating</option>
-              <option selected value="download_count">Download Count</option>
-              <option value="like_count">Like Count</option>
-              <option value="title">Title</option>
-              <option value="peers">Peers</option>
-              <option value="seeds">Seeds</option>
-            </select>
-          </div>
-
-          <div>
-            <h5 className='text-center text-success'>Order By</h5>
-            <select className="form-select bg-dark text-light" onChange={(e) => handleChange("order_by", e.target.value)}>
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
-            </select>
-          </div>
-
-          <div>
-            <h5 className='text-center text-success'>Minimum Rating</h5>
-            <select className="form-select bg-dark text-light" onChange={(e) => handleChange("minimum_rating", e.target.value)}>
-              <option value="0">All</option>
-              <option value="10">10</option>
-              <option value="9">9</option>
-              <option value="8">8</option>
-              <option value="7">7</option>
-              <option value="6">6</option>
-              <option value="5">5</option>
-              <option value="4">4</option>
-              <option value="3">3</option>
-              <option value="2">2</option>
-              <option value="1">1</option>
-            </select>
-          </div>
-
-          <div>
-            <h5 className='text-center text-success'>With RT ratings</h5>
-            <select className="form-select bg-dark text-light" onChange={(e) => handleChange("with_rt_ratings", e.target.value)}>
-              <option value="false">All</option>
-              <option value="true">With RT Ratings</option>
-            </select>
-          </div>
-
+        <div className="hstack gap-3 align-items-center justify-content-between">
+          <input className="form-control" type="text" placeholder="Search" onChange={(e) => handleChange("query_term", e.target.value)} />
+          <button className="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
+            <span className="material-icons align-middle">
+              sort
+            </span>
+          </button>
         </div>
 
-        <section>
+
+        <div className="collapse" id="filters">
+          <div className="d-flex justify-content-around gap-2 py-2 flex-wrap">
+
+            <div>
+              <h5 className='text-center text-success'>Genre</h5>
+              <select className="form-select bg-dark text-light bg-dark text-light" onChange={(e) => handleChange("genre", e.target.value)}>
+                <option value="">All</option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Biography">Biography</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Drama">Drama</option>
+                <option value="Family">Family</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Film-Noir">Film-Noir</option>
+                <option value="History">History</option>
+                <option value="Horror">Horror</option>
+                <option value="Music">Music</option>
+                <option value="Musical">Musical</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Short">Short</option>
+                <option value="Sport">Sport</option>
+                <option value="Superhero">Superhero</option>
+                <option value="Thriller">Thriller</option>
+                <option value="War">War</option>
+                <option value="Western">Western</option>
+              </select>
+            </div>
+
+            <div>
+              <h5 className='text-center text-success'>Sort By</h5>
+              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
+                <option value="date_added">Date Added</option>
+                <option value="year">Year</option>
+                <option value="rating">Rating</option>
+                <option selected value="download_count">Download Count</option>
+                <option value="like_count">Like Count</option>
+                <option value="title">Title</option>
+                <option value="peers">Peers</option>
+                <option value="seeds">Seeds</option>
+              </select>
+            </div>
+
+            <div>
+              <h5 className='text-center text-success'>Order By</h5>
+              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("order_by", e.target.value)}>
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+              </select>
+            </div>
+
+            <div>
+              <h5 className='text-center text-success'>Minimum Rating</h5>
+              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("minimum_rating", e.target.value)}>
+                <option value="0">All</option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+
+            <div>
+              <h5 className='text-center text-success'>With RT ratings</h5>
+              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("with_rt_ratings", e.target.value)}>
+                <option value="false">All</option>
+                <option value="true">With RT Ratings</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <section className='mt-3'>
           {loading ? <LoadingSpinner /> :
             movie != null && movie != undefined ?
               movie.map(({ id, title, url, summary, year, large_cover_image, rating, runtime, torrents, yt_trailer_code }) => (
