@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head"
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -84,13 +84,13 @@ export default function Watch({ moviehash, movie }) {
 
           <div className="vstack gap-4">
 
-            <div className="hstack gap-3">
-              <Image className='rounded border border-5 border-success' alt='cover' src={movie.large_cover_image} height={300} width={230}></Image>
+            <div className="hstack gap-3 align-items-center flex-wrap">
+              <div><img className='rounded border border-5 border-success' alt='cover' src={movie.large_cover_image} height={300} width={200} /></div>
               <h4 className="flex-grow-1">{movie.title}<br />{movie.year}</h4>
 
               <div className='d-flex flex-column me-5'>
-                <div className="text-warning gap-2 hstack">
-                  <Image alt='rating' src='/star.png' width={30} height={30}></Image>
+                <div className="text-warning gap-2 hstack align-items-center">
+                  <div><img alt='rating' src='/star.png' width={20} height={20}></img></div>
                   <span className="mt-2">{movie.rating}</span>
                 </div>
                 <span>{Math.floor(movie.runtime / 60) + " Hrs " + movie.runtime % 60 + " Min"}</span>

@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
-import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import LoadingSpinner from '../components/loading'
@@ -91,7 +90,7 @@ export default function Home() {
 
         <div className="hstack justify-content-between py-3">
           <h4>Good {getTimeOfDay()}, Pirate</h4>
-          <a href="https://github.com/Mike-M-87/Next-YT.git" target="_blank" rel="noreferrer"><Image alt='profile' className="rounded-circle" src='/github.webp' width={40} height={40} /></a>
+          <a href="https://github.com/Mike-M-87/Next-YT.git" target="_blank" rel="noreferrer"><img alt='profile' className="rounded-circle" src='/github.webp' width={40} height={40} /></a>
         </div>
 
         <div className="hstack gap-3 align-items-center justify-content-between">
@@ -200,7 +199,7 @@ export default function Home() {
 
                     <div className='d-flex flex-column me-3'>
                       <div className="text-warning gap-2 hstack align-items-center">
-                        <div> <img alt='rating' src='/star.png' width={15} height={15}></img></div>
+                        <div><img alt='rating' src='/star.png' width={15} height={15}></img></div>
                         <span className='mt-1 mt-md-0'>{rating}</span>
                       </div>
                       <small>{Math.floor(runtime / 60) + " Hrs " + runtime % 60 + " Min"}</small>
