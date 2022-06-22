@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import LoadingSpinner from '../components/loading'
 
-
 const yturl = 'https://yts.mx/api/v2/list_movies.json?'
 
 const defaultparams = {
@@ -19,7 +18,7 @@ const defaultparams = {
   with_rt_ratings: false,
 }
 
-Home.getInitialProps = async () => {
+export async function getServerSideProps() {
   let movies = null
   try {
     const response = await fetch(`${yturl}${Object.entries(defaultparams).map(([key, value]) => `${key}=${value}`).join('&')}`)
@@ -28,7 +27,9 @@ Home.getInitialProps = async () => {
   } catch (error) {
     console.log(error);
   }
-  return { premovies: movies }
+  return {
+    props: { premovies: movies }
+  }
 }
 
 
@@ -38,7 +39,6 @@ export default function Home({ premovies }) {
   const [search, setSearch] = useState('')
   const [params, setParams] = useState(defaultparams)
   const [trailer, setTrailer] = useState('')
-
 
   useEffect(() => {
     async function fetchmovies() {
