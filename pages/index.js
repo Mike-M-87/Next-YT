@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
@@ -18,23 +19,8 @@ const defaultparams = {
   with_rt_ratings: false,
 }
 
-export async function getServerSideProps() {
-  let movies = null
-  try {
-    const response = await fetch(`${yturl}${Object.entries(defaultparams).map(([key, value]) => `${key}=${value}`).join('&')}`)
-    const json = await response.json()
-    movies = json.data.movies
-  } catch (error) {
-    console.log(error);
-  }
-  return {
-    props: { premovies: movies }
-  }
-}
-
-
-export default function Home({ premovies }) {
-  const [movies, setmovies] = useState(premovies)
+export default function Home() {
+  const [movies, setmovies] = useState(null)
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [params, setParams] = useState(defaultparams)
@@ -208,12 +194,15 @@ export default function Home({ premovies }) {
               movies.map(({ id, title, url, summary, year, large_cover_image, rating, runtime, torrents, yt_trailer_code }) => (
 
                 <div className="card my-2 rounded bg-dark" key={id}>
-                  <div data-bs-toggle="collapse" data-bs-target={`#movie${id}`} className="hstack gap-4 cursor-pointer">
-                    <Image className='rounded' alt='cover' src={large_cover_image} height={140} width={100}></Image>
+                  <div data-bs-toggle="collapse" data-bs-target={`#movie${id}`} className="hstack gap-4 cursor-pointer align-items-center">
+                    <div><img className='rounded' alt='cover' src={large_cover_image} height={140} width={100} /></div>
                     <h6 className="flex-grow-1">{title}<br />{year}</h6>
 
                     <div className='d-flex flex-column me-3'>
-                      <div className="text-warning gap-2 hstack"><Image alt='rating' src='/star.png' width={20} height={20}></Image>{rating}</div>
+                      <div className="text-warning gap-2 hstack align-items-center">
+                        <div> <img alt='rating' src='/star.png' width={15} height={15}></img></div>
+                        <span className='mt-1 mt-md-0'>{rating}</span>
+                      </div>
                       <small>{Math.floor(runtime / 60) + " Hrs " + runtime % 60 + " Min"}</small>
                     </div>
                   </div>
@@ -243,9 +232,7 @@ export default function Home({ premovies }) {
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
-
           <li className="page-item active"><a className="page-link bg-success" href="#">{params.page}</a></li>
-
           <li className="page-item">
             <button className="page-link text-success bg-dark" href="#" aria-label="Next" onClick={(e) => handleChange("page", params.page + 1)} disabled={loading}>
               <span aria-hidden="true">&raquo;</span>
