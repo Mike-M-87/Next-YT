@@ -11,7 +11,7 @@ a:hover {
 }
 
 * {
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .cursor-pointer {
@@ -43,10 +43,19 @@ a:hover {
   width: 100vw;
 }
 
-#ytslist{
+#ytslist {
   scroll-behavior: smooth;
 }
 
-.sdf{
+.sdf {
   color: #1d1d1d;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #07ac6d;
+  border-radius: 20px;
 }

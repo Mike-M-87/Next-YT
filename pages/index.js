@@ -24,6 +24,10 @@ export default function Home() {
   const [search, setSearch] = useState('')
   const [params, setParams] = useState(defaultparams)
   const [trailer, setTrailer] = useState('')
+  const [timer, setTimer] = useState(null);
+
+
+
 
   useEffect(() => {
     async function fetchmovies() {
@@ -43,20 +47,27 @@ export default function Home() {
 
 
   const handleChange = useCallback((key, value) => {
-    if (key === 'query_term') {
-      setParams({
-        ...params,
-        [key]: value,
-        page: 1
-      })
-    } else {
-      setParams({
-        ...params,
-        [key]: value
-      })
+    if (timer) {
+      clearTimeout(timer)
+      setTimer(null)
     }
+    setTimer(setTimeout(() => {
+      if (key === 'query_term') {
+        setParams({
+          ...params,
+          [key]: value,
+          page: 1
+        })
+      } else {
+        setParams({
+          ...params,
+          [key]: value
+        })
+      }
+    }, 500))
+  }, [params,timer])
 
-  }, [params])
+
 
   const getTimeOfDay = () => {
     let date = new Date()
@@ -94,11 +105,11 @@ export default function Home() {
         </div>
 
         <div className="hstack gap-3 align-items-center justify-content-between">
-          <input className="form-control" type="text" placeholder="Search" onChange={(e) => handleChange("query_term", e.target.value)} />
+          <input className="bg-dark border-0 py-2 text-light form-control" type="text" placeholder="Search" onChange={(e) => {
+            handleChange("query_term", e.target.value);
+          }} />
           <button className="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
-            <span className="material-icons align-middle">
-              sort
-            </span>
+          <span className="material-icons align-middle">tune</span>
           </button>
         </div>
 
@@ -108,7 +119,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>Genre</h5>
-              <select className="form-select bg-dark text-light bg-dark text-light" onChange={(e) => handleChange("genre", e.target.value)}>
+              <select  className="form-select  custom-scrollbar bg-dark border-0 text-light" onChange={(e) => handleChange("genre", e.target.value)}>
                 <option value="">All</option>
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
@@ -139,7 +150,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>Sort By</h5>
-              <select defaultValue="download_count" className="form-select bg-dark text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
+              <select defaultValue="download_count" className="form-select bg-dark border-0 text-light" onChange={(e) => handleChange("sort_by", e.target.value)}>
                 <option value="date_added">Date Added</option>
                 <option value="year">Year</option>
                 <option value="rating">Rating</option>
@@ -153,7 +164,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>Order By</h5>
-              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("order_by", e.target.value)}>
+              <select className="form-select border-0 bg-dark text-light" onChange={(e) => handleChange("order_by", e.target.value)}>
                 <option value="desc">Descending</option>
                 <option value="asc">Ascending</option>
               </select>
@@ -161,7 +172,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>Minimum Rating</h5>
-              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("minimum_rating", e.target.value)}>
+              <select className="form-select border-0 bg-dark text-light" onChange={(e) => handleChange("minimum_rating", e.target.value)}>
                 <option value="0">All</option>
                 <option value="10">10</option>
                 <option value="9">9</option>
@@ -178,7 +189,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>With RT ratings</h5>
-              <select className="form-select bg-dark text-light" onChange={(e) => handleChange("with_rt_ratings", e.target.value)}>
+              <select className="form-select border-0 bg-dark text-light" onChange={(e) => handleChange("with_rt_ratings", e.target.value)}>
                 <option value="false">All</option>
                 <option value="true">With RT Ratings</option>
               </select>
@@ -227,13 +238,13 @@ export default function Home() {
 
         <ul className="pagination justify-content-center py-4">
           <li className="page-item">
-            <button className="page-link text-success bg-dark" href="#" aria-label="Previous" onClick={(e) => handleChange("page", params.page - 1)} disabled={params.page <= 1 || loading}>
+            <button className="page-link text-success bg-dark border-0" href="#" aria-label="Previous" onClick={(e) => handleChange("page", params.page - 1)} disabled={params.page <= 1 || loading}>
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
-          <li className="page-item active"><a className="page-link bg-success" href="#">{params.page}</a></li>
+          <li className="page-item active"><a className="page-link bg-success border-0" href="#">{params.page}</a></li>
           <li className="page-item">
-            <button className="page-link text-success bg-dark" href="#" aria-label="Next" onClick={(e) => handleChange("page", params.page + 1)} disabled={loading}>
+            <button className="page-link text-success bg-dark border-0" href="#" aria-label="Next" onClick={(e) => handleChange("page", params.page + 1)} disabled={loading}>
               <span aria-hidden="true">&raquo;</span>
             </button>
           </li>
