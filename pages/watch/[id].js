@@ -19,7 +19,7 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       moviehash,
-      movie: movie,
+      movie,
     }
   }
 }
@@ -36,6 +36,25 @@ export default function Watch({ moviehash, movie }) {
     }
   }, [trailer])
 
+  useEffect(() => {
+    if (movie) {
+      document.getElementById('share-button').addEventListener('click', async () => {
+        try {
+          await navigator.share({
+            title: movie.title,
+            url: window.location.href
+          })
+        } catch (err) {
+          console.log(err);
+          navigator.clipboard.writeText(window.location.href).then(function () {
+            console.log('Copied to clipboard');
+          }, function (err) {
+            console.log(err);
+          })
+        }
+      });
+    }
+  }, [movie])
 
 
   return (
@@ -43,16 +62,14 @@ export default function Watch({ moviehash, movie }) {
 
       {movie && moviehash &&
         <>
-          <video controls src={`magnet:?xt=urn:btih:${moviehash}&dn=Sintel`} poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
-            <track srcLang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt" />
-          </video>
+          <video controls src={`magnet:?xt=urn:btih:${moviehash}&dn=Sintel`} poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel"></video>
 
           <Head>
             <meta charSet="UTF-8" />
             <meta content="width=device-width, initial-scale=1" name="viewport" />
             <meta name="theme-color" content="#5CD85A" />
             <meta name="color-scheme" content="light dark" />
-            <meta property="og:title" content={movie.title+" ⭐"+movie.rating} />
+            <meta property="og:title" content={movie.title + " ⭐" + movie.rating} />
             <meta property="og:description" content={movie.description_full} />
             <meta property="og:url" content="https://next-yt.vercel.app/" />
             <meta property="og:image" content={movie.large_cover_image} />
@@ -82,19 +99,7 @@ export default function Watch({ moviehash, movie }) {
             <div className='hstack gap-4'>
               <a href={movie.url} className='btn btn-secondary' target="_blank" rel="noreferrer">YTS</a>
               <a className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(movie.yt_trailer_code)}>Trailer and Clips</a>
-              <button
-                id="share-button"
-                onClick={(e) => async () => {
-                  try {
-                    await navigator.share({
-                      title: movie.title,
-                      url: window.location.href
-                    })
-                  } catch (error) {
-                    alert(error)
-                  }
-                }}
-                className="btn btn-success text-black py-2 px-2 rounded-circle">
+              <button id="share-button" className="btn btn-success text-black py-2 px-2 rounded-circle">
                 <span className="material-icons align-middle">share</span>
               </button>
             </div>
