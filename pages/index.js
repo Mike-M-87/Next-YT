@@ -26,13 +26,10 @@ export default function Home() {
   const [trailer, setTrailer] = useState('')
   const [timer, setTimer] = useState(null);
 
-
-
-
   useEffect(() => {
     async function fetchmovies() {
+      setLoading(true)
       try {
-        setLoading(true)
         const response = await fetch(`${yturl}${Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&')}`)
         const json = await response.json()
         setmovies(json.data.movies)
@@ -65,7 +62,7 @@ export default function Home() {
         })
       }
     }, 500))
-  }, [params,timer])
+  }, [params, timer])
 
 
 
@@ -109,7 +106,7 @@ export default function Home() {
             handleChange("query_term", e.target.value);
           }} />
           <button className="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
-          <span className="material-icons align-middle">tune</span>
+            <span className="material-icons align-middle">tune</span>
           </button>
         </div>
 
@@ -119,7 +116,7 @@ export default function Home() {
 
             <div>
               <h5 className='text-center text-success'>Genre</h5>
-              <select  className="form-select  custom-scrollbar bg-dark border-0 text-light" onChange={(e) => handleChange("genre", e.target.value)}>
+              <select className="form-select  custom-scrollbar bg-dark border-0 text-light" onChange={(e) => handleChange("genre", e.target.value)}>
                 <option value="">All</option>
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
@@ -233,7 +230,7 @@ export default function Home() {
                   </div>
 
                 </div>
-              )) : <LoadingSpinner />}
+              )) : <h5 className='text-center py-5 my-5 text-danger'>No Movies Found</h5>}
         </section>
 
         <ul className="pagination justify-content-center py-4">

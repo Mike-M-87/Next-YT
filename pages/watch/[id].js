@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head"
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -96,7 +97,8 @@ export default function Watch({ moviehash, movie }) {
               </div>
             </div>
 
-            <div className='hstack gap-4'>
+            <div className='hstack flex-wrap gap-3 align-items-center'>
+              <Link href="/"><a className="btn btn-outline-success btn-sm rounded-pill"><span className="fs-6 ms-2 mb-1 align-middle material-icons">arrow_back_ios</span></a></Link>
               <a href={movie.url} className='btn btn-secondary' target="_blank" rel="noreferrer">YTS</a>
               <a className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(movie.yt_trailer_code)}>Trailer and Clips</a>
               <button id="share-button" className="btn btn-success text-black py-2 px-2 rounded-circle">
