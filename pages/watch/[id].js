@@ -1,109 +1,147 @@
 /* eslint-disable @next/next/no-img-element */
-import Head from "next/head"
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { ShareButton } from "../../components/shareButton";
 
 export async function getServerSideProps({ params }) {
   let moviehash = null;
   let movie = null;
 
   try {
-    const id = params.id
-    const response = await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}&with_images=true&with_cast=true`);
-    const result = await response.json()
-    movie = result.data.movie
-    moviehash = movie.torrents.filter(torrent => torrent.quality === "720p")[0].hash
+    const id = params.id;
+    const response = await fetch(
+      `https://yts.mx/api/v2/movie_details.json?movie_id=${id}&with_images=true&with_cast=true`
+    );
+    const result = await response.json();
+    movie = result.data.movie;
+    moviehash = movie.torrents.filter(
+      (torrent) => torrent.quality === "720p"
+    )[0].hash;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 
   return {
     props: {
       moviehash,
       movie,
-    }
-  }
+    },
+  };
 }
 
 export default function Watch({ moviehash, movie }) {
-  const [trailer, setTrailer] = useState('')
+  const [trailer, setTrailer] = useState("");
 
   useEffect(() => {
-    const myModalEl = document.getElementById('trailerModal')
+    const myModalEl = document.getElementById("trailerModal");
     if (myModalEl) {
-      myModalEl.addEventListener('hidden.bs.modal', event => {
-        setTrailer('')
-      })
-    }
-  }, [trailer])
-
-  useEffect(() => {
-    if (movie) {
-      document.getElementById('share-button').addEventListener('click', async () => {
-        try {
-          await navigator.share({
-            title: movie.title,
-            url: "https://next-yt.vercel.app/watch/" + movie.id
-          })
-        } catch (err) {
-          navigator.clipboard.writeText("https://next-yt.vercel.app/watch/" + movie.id).then(function () {
-            toast.success('Copied to clipboard!')
-          }, function (err) {
-            toast.error('Error sharing')
-          })
-        }
+      myModalEl.addEventListener("hidden.bs.modal", (event) => {
+        setTrailer("");
       });
     }
-  }, [movie])
-
+  }, [trailer]);
 
   return (
-    <main className="container-fluid overflow-auto fh-100 bg-black text-light">
-
-      {movie && moviehash &&
+    <main className="container-fluid fh-100 overflow-auto bg-black text-light">
+      {movie && moviehash && (
         <>
-          <video controls src={`magnet:?xt=urn:btih:${moviehash}&dn=Sintel`} poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel"></video>
+          <video
+            controls
+            src={`magnet:?xt=urn:btih:${moviehash}&dn=Sintel`}
+            poster="https://via.placeholder.com/150/0000FF/808080"
+            width="100%"
+            data-title="Sintel"
+          ></video>
 
           <Head>
             <meta charSet="UTF-8" />
-            <meta content="width=device-width, initial-scale=1" name="viewport" />
+            <meta
+              content="width=device-width, initial-scale=1"
+              name="viewport"
+            />
             <meta name="theme-color" content="#5CD85A" />
             <meta name="color-scheme" content="light dark" />
-            <meta property="og:title" content={movie.title + " ⭐" + movie.rating} />
+            <meta
+              property="og:title"
+              content={movie.title + " ⭐" + movie.rating}
+            />
             <meta property="og:description" content={movie.description_full} />
-            <meta property="og:url" content={"https://next-yt.vercel.app/watch/" + movie.id} />
+            <meta
+              property="og:url"
+              content={"https://next-yt.vercel.app/watch/" + movie.id}
+            />
             <meta property="og:image" content={movie.large_cover_image} />
             <meta property="og:image:type" content="image/jpeg" />
             <meta property="og:image:width" content="400" />
             <meta property="og:image:height" content="300" />
             <meta property="og:image:alt" content={movie.title} />
             <title>{movie.title}</title>
-            <link rel="icon" href="https://yts.mx/assets/images/website/favicon.ico" />
+            <link
+              rel="icon"
+              href="https://yts.mx/assets/images/website/favicon.ico"
+            />
           </Head>
 
           <div className="vstack gap-4">
-
             <div className="hstack gap-3 align-items-center flex-wrap">
-              <div><img className='rounded border border-5 border-success' alt='cover' src={movie.large_cover_image} height={300} width={200} /></div>
-              <h4 className="flex-grow-1">{movie.title}<br />{movie.year}</h4>
+              <div>
+                <img
+                  className="rounded border border-5 border-success"
+                  alt="cover"
+                  src={movie.large_cover_image}
+                  height={300}
+                  width={200}
+                />
+              </div>
+              <h4 className="flex-grow-1">
+                {movie.title}
+                <br />
+                {movie.year}
+              </h4>
 
-              <div className='d-flex flex-column me-5'>
+              <div className="d-flex flex-column me-5">
                 <div className="text-warning gap-2 hstack align-items-center">
-                  <div><img alt='rating' src='/star.png' width={20} height={20}></img></div>
+                  <div>
+                    <img
+                      alt="rating"
+                      src="/star.png"
+                      width={20}
+                      height={20}
+                    ></img>
+                  </div>
                   <span className="mt-2">{movie.rating}</span>
                 </div>
-                <span>{Math.floor(movie.runtime / 60) + " Hrs " + movie.runtime % 60 + " Min"}</span>
+                <span>
+                  {Math.floor(movie.runtime / 60) +
+                    " Hrs " +
+                    (movie.runtime % 60) +
+                    " Min"}
+                </span>
               </div>
             </div>
 
-            <div className='hstack flex-wrap gap-3 align-items-center'>
-              <Link href="/"><a className="btn btn-outline-success btn-sm rounded-pill"><span className="fs-6 ms-2 mb-1 align-middle material-icons">arrow_back_ios</span></a></Link>
-              <a href={movie.url} className='btn btn-secondary' target="_blank" rel="noreferrer">YTS</a>
-              <a className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#trailerModal" onClick={(e) => setTrailer(movie.yt_trailer_code)}>Trailer and Clips</a>
-              <button id="share-button" className="btn btn-success text-black py-2 px-2 rounded-circle">
-                <span className="material-icons align-middle">share</span>
-              </button>
+            <div className="hstack flex-wrap gap-3 align-items-center">
+              <Link href="/" passHref>
+                <i className="cursor-pointer fs-1 text-success align-middle fas fa-solid fa-circle-chevron-left"></i>
+              </Link>
+              <a
+                href={movie.url}
+                className="btn btn-secondary"
+                target="_blank"
+                rel="noreferrer"
+              >
+                YTS
+              </a>
+              <a
+                className="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#trailerModal"
+                onClick={(e) => setTrailer(movie.yt_trailer_code)}
+              >
+                Trailer
+              </a>
+              <ShareButton id={movie.id} title={movie.title} />
             </div>
 
             <p className="lead">{movie.description_full}</p>
@@ -117,17 +155,28 @@ export default function Watch({ moviehash, movie }) {
             </div>
           </div>
 
-          <div className="modal fade" id="trailerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div
+            className="modal fade"
+            id="trailerModal"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
-                <div className='ratio ratio-16x9'>
-                  <iframe src={`https://www.youtube.com/embed/${trailer}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                <div className="ratio ratio-16x9">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${trailer}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
               </div>
             </div>
           </div>
         </>
-      }
-    </main >
-  )
+      )}
+    </main>
+  );
 }
